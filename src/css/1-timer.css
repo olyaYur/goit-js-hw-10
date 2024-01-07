@@ -1,0 +1,14 @@
+.timer {
+    display: flex;
+  }
+  
+  .field {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .label {
+    text-transform: uppercase;
+  }
+  
