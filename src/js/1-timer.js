@@ -3,22 +3,20 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
-
-
+const inputTimeField  = document.querySelector('#datetime-picker');
+const startBtn = document.querySelector('button[data-start]');
 
 let daysTimer = document.querySelector('span[data-days]');
 let hoursTimer = document.querySelector('span[data-hours]');
 let minsTimer = document.querySelector('span[data-minutes]');
-let  secsTimer =document.querySelector('span[data-seconds]');
+let secTimer = document.querySelector('span[data-seconds]');
 
 
- 
-elemH1Link.innerHTML = markupTimer;
-const buttonStart = document.querySelector('.button');
 
-
-const datePicker = flatpickr("#datetime-picker", {
+const options =  {
     enableTime: true,
     time_24hr: true,
     defaultDate: new Date(),
@@ -37,15 +35,18 @@ const datePicker = flatpickr("#datetime-picker", {
           message: "Please choose a date in the future",
         });
         
-        buttonStart.setAttribute("disabled", true); 
+        startBtn.setAttribute("disabled", true); 
       } else {
-        buttonStart.removeAttribute("disabled"); 
+        startBtn.removeAttribute("disabled"); 
       }
     },
-  }
-  );
+  };
   
-  function convertMs(difference) {
+  
+const datePicker = flatpickr(inputTimeField, options);
+
+
+  function convertMs(ms) {
     // Number of milliseconds per unit of time
     const second = 1000;
     const minute = second * 60;
@@ -53,13 +54,13 @@ const datePicker = flatpickr("#datetime-picker", {
     const day = hour * 24;
   
     // Remaining days
-    const days = Math.floor(difference / day);
+    const days = Math.floor(ms / day);
     // Remaining hours
-    const hours = Math.floor((difference % day) / hour);
+    const hours = Math.floor((ms % day) / hour);
     // Remaining minutes
-    const minutes = Math.floor(((difference % day) % hour) / minute);
+    const minutes = Math.floor(((ms % day) % hour) / minute);
     // Remaining seconds
-    const seconds = Math.floor((((difference % day) % hour) % minute) / second);
+    const seconds = Math.floor((((ms % day) % hour) % minute) / second);
   
     return { days, hours, minutes, seconds};
     
@@ -73,26 +74,26 @@ const datePicker = flatpickr("#datetime-picker", {
   
   function handlerTimeClick(){
 
-    let timer = setInterval(() => {
+  let timer = setInterval(() => {
       const currentDateTime = new Date().getTime();
       const selectedDateTime = datePicker.selectedDates[0].getTime();
-     let difference = selectedDateTime - currentDateTime;
+      let deltaTime = selectedDateTime - currentDateTime;
      
   
-     const result = convertMs(difference);
-
-        console.log(`${result.days}`,
-        `${result.hours}`,
-        `${result.minutes}`,
-        `${result.seconds}`);
+     const { days, hours, minutes, seconds} = convertMs(deltaTime);
+     daysTimer.textContent = days;
+     hoursTimer.textContent = hours;
+     minsTimer.textContent = minutes;
+     secTimer.textContent = seconds;
+      
      
-    if (difference < 0) {
+    if (deltaTime <= 0) {
       clearInterval(timer);
     }
     }, 1000);
   }
 
-    buttonStart.addEventListener("click", handlerTimeClick);
+  startBtn.addEventListener("click", handlerTimeClick);
   
 
 
