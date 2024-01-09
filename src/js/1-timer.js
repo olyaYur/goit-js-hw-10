@@ -1,11 +1,12 @@
 "use strict";
-// Описаний в документації
+
 import flatpickr from "flatpickr";
-// Додатковий імпорт стилів
 import "flatpickr/dist/flatpickr.min.css";
 
 
-const elemH1Link = document.querySelector(".title");
+
+
+
 let daysTimer = document.querySelector('span[data-days]');
 let hoursTimer = document.querySelector('span[data-hours]');
 let minsTimer = document.querySelector('span[data-minutes]');
