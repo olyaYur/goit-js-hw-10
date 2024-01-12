@@ -1,14 +1,16 @@
+
+
 .timer {
     display: flex;
+    
   }
-  
-  .field {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
+ 
   .label {
+    display: block;
+    padding-right: 10px;
     text-transform: uppercase;
+    font-size: 14px;
   }
+
+
   
