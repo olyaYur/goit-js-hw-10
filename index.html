@@ -6,57 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vanilla App Template</title>
     
-    <script type="module" crossorigin src="/goit-js-hw-10/commonHelpers3.js"></script>
-    <link rel="modulepreload" crossorigin href="/goit-js-hw-10/assets/vendor-651d7991.js">
-    <link rel="modulepreload" crossorigin href="/goit-js-hw-10/assets/1-timer-2a4edc97.js">
-    <link rel="stylesheet" href="/goit-js-hw-10/assets/vendor-80d0dc0f.css">
     <link rel="stylesheet" href="/goit-js-hw-10/assets/index-e61649b5.css">
   </head>
   <body>
-    <input type="text" id="datetime-picker" />
-    <button type="button" data-start>Start</button>
-
-      <div class="timer">
-        <div class="field">
-          <span class="value" data-days>00</span>
-          <span class="label">Days</span>
-        </div>
-        <div class="field">
-          <span class="value" data-hours>00</span>
-          <span class="label">Hours</span>
-        </div>
-        <div class="field">
-          <span class="value" data-minutes>00</span>
-          <span class="label">Minutes</span>
-        </div>
-        <div class="field">
-          <span class="value" data-seconds>00</span>
-          <span class="label">Seconds</span>
-        </div>
-      </div>
-
-      <form class="form">
-        <label>
-          Delay (ms)
-          <input type="number" name="delay" required />
-        </label>
-      
-        <fieldset>
-          <legend>State</legend>
-          <label>
-            <input type="radio" name="state" value="fulfilled" required />
-            Fulfilled
-          </label>
-          <label>
-            <input type="radio" name="state" value="rejected" required />
-            Rejected
-          </label>
-        </fieldset>
-      
-        <button type="submit">Create notification</button>
-      </form>
+    <header class="header">
+      <nav class="nav">
+        <ul class="nav-list">
+          <li class="nav-item">
+            <a href="./1-timer.html" class="nav-link">Page 2</a>
+          </li>
     
-
-    
+          <li class="nav-item">
+            <a href="./2-snackbar.html" class="nav-link">Page 3</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
   </body>
 </html>
