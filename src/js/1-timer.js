@@ -80,16 +80,20 @@ const datePicker = flatpickr(inputTimeField, options);
      
   
      const { days, hours, minutes, seconds} = convertMs(deltaTime);
-     daysTimer.textContent = days;
-     hoursTimer.textContent = hours;
-     minsTimer.textContent = minutes;
-     secTimer.textContent = seconds;
+     daysTimer.textContent = addLeadingZero(days);
+     hoursTimer.textContent = addLeadingZero(hours);
+     minsTimer.textContent = addLeadingZero(minutes);
+     secTimer.textContent = addLeadingZero(seconds);
       
      
     if (deltaTime <= 0) {
       clearInterval(timer);
     }
     }, 1000);
+  }
+
+  function addLeadingZero(value) {
+    return String(value).padStart(2, '0');
   }
 
   startBtn.addEventListener("click", handlerTimeClick);
