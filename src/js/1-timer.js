@@ -33,7 +33,6 @@ const options =  {
         iziToast.error({
           message: "Please choose a date in the future",
         });
-        
         startBtn.setAttribute("disabled", true); 
       } else {
         startBtn.removeAttribute("disabled"); 
