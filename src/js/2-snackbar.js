@@ -1,54 +1,42 @@
-
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
 const form = document.querySelector('.form');
+const createPromisBtn = document.querySelector('button');
+let inputValue = form.elements.delay;
 
-let inputValue = form.elements.delay.value;
-let inputState = form.elements.state.value;
+form.addEventListener('submit', onCreatePromise);
 
-
-
-
-
-function createPromise (inputState, inputValue ){
-    return new Promise((resolve, reject)=> {
+function createPromise(delay, state) {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if(inputState === "fulfilled"){
-        resolve(inputValue);
-      } else {
-        reject(inputValue);
-      }   
-    }, inputValue);
-});
-};
+      state === 'fulfilled' ? resolve(delay) : reject(delay);
+    }, delay);
+  });
+}
 
-function handleCreateNotification(event){
-    event.preventDefault();
-    let inputState= form.elements.state.value;
-    let inputValue = form.elements.delay.value;
-
-    createPromise(inputState, inputValue) 
-    .then(inputValue =>{
-        iziToast.success({
-            position: 'topRight',
-            title: 'OK',
-            message: `✅ Fulfilled promise in ${inputValue}ms`,
-          });   
+function onCreatePromise(event) {
+  event.preventDefault();
+  let delay = inputValue.value;
+  let state = form.elements.state.value;
+  createPromise(delay, state)
+    .then(delay => {
+      iziToast.success({
+        position: 'topRight',
+        title: 'OK',
+        message: `✅ Fulfilled promise in ${delay}ms`,
+      });
     })
-    .catch(error =>{
-        iziToast.error({
-            position: 'topRight',
-            title: 'Error',
-            message: `❌ Rejected promise in ${error}ms`,
-          });  
+    .catch(error => {
+      iziToast.error({
+        position: 'topRight',
+        title: 'Error',
+        message: `❌ Rejected promise in ${error}ms`,
+      });
     })
     .finally(() => {
-        form.reset();
-      });
-   
-      inputValue = "";  
-};
+      form.reset();
+    });
 
-form.addEventListener("submit", handleCreateNotification);
-
+  inputValue.value = '';
+}
