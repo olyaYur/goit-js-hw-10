@@ -86,7 +86,7 @@ const datePicker = flatpickr(inputTimeField, options);
      secTimer.textContent = addLeadingZero(seconds);
       
      
-    if (deltaTime <= 0) {
+    if (deltaTime <= 1000) {
       clearInterval(timer);
     }
     }, 1000);
