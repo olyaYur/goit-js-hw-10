@@ -44,9 +44,7 @@ const options =  {
         iziToast.success({
           message: "You are the best",
         });
-        startBtn.addEventListener("click", handlerTimeClick);
         startBtn.disabled = false;
-        inputTimeField.disabled =false;
       } 
         
       }
@@ -58,16 +56,18 @@ console.log(datePicker);
 
 
  function handlerTimeClick(event){
+  startBtn.disabled = true;
+  inputTimeField.disabled = true;
     
-    let timer = setInterval(() => {
+  let timer = setInterval(() => {
 
   
     const userSelectedDate = datePicker.selectedDates[0].getTime();
     console.log(userSelectedDate);
     const currentDateTime = new Date().getTime();
-    /*console.log(currentDateTime);*/
+   
     const deltaTime = userSelectedDate - currentDateTime;
-     /* console.log(deltaTime)*/
+  
 
       if (deltaTime < 0) {
       clearInterval(timer);

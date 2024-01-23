@@ -25,6 +25,8 @@ function createPromise (inputState, inputValue ){
 
 function handleCreateNotification(event){
     event.preventDefault();
+    
+
     let inputState= form.elements.state.value;
     let inputValue = form.elements.delay.value;
 
@@ -43,10 +45,10 @@ function handleCreateNotification(event){
             message: `❌ Rejected promise in ${error}ms`,
           });  
     })
-    .finally(() => {
-        form.reset();
+    .finally(() => {  
       });
-   
+      
+      form.reset();
       inputValue = "";  
 };
 
