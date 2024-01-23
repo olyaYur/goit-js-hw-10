@@ -15,12 +15,18 @@ let secTimer = document.querySelector('span[data-seconds]');
 
 
 
+startBtn.disabled = true;
+
+
 const options =  {
     enableTime: true,
     time_24hr: true,
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates,) {
+      startBtn.disabled = false;
+      startBtn.addEventListener("click", handlerTimeClick);
+
       const currentDateTime = new Date().getTime();
       console.log(currentDateTime);
       const selectedDateTime = selectedDates[0].getTime();
@@ -29,20 +35,63 @@ const options =  {
       const difference = selectedDateTime - currentDateTime;
       console.log(difference);
 
+
       if(selectedDates[0].getTime()<= new Date().getTime()){
         iziToast.error({
           message: "Please choose a date in the future",
         });
-        startBtn.setAttribute("disabled", true); 
+        startBtn.disabled = true;
+      } else if(event.target.nodeName !== 'button') {
+        return;
       } else {
-        startBtn.removeAttribute("disabled"); 
+        handlerTimeClick();
       }
     },
   };
   
   
 const datePicker = flatpickr(inputTimeField, options);
+console.log(datePicker);
 
+
+ function handlerTimeClick(event){
+  iziToast.success({
+    position: 'topCenter',
+    title: 'Ok',
+    message: ' A good choice!',
+  });
+
+  startBtn.disabled = true;
+  inputTimeField.disabled = true;
+
+  let timer = null;
+
+  
+
+  timer = setInterval(() => {
+      let currentDateTime = new Date().getTime();
+      let selectedDateTime = datePicker.selectedDates[0].getTime();
+      let deltaTime = selectedDateTime - currentDateTime;
+
+      if (deltaTime <= 1000) {
+      clearInterval(timer);
+      timer = null;
+      startBtn.disabled = false;
+      inputTimeField.disabled = false;
+      return;
+    }
+
+     const { days, hours, minutes, seconds} = convertMs(deltaTime);
+     daysTimer.textContent = addLeadingZero(days);
+     hoursTimer.textContent = addLeadingZero(hours);
+     minsTimer.textContent = addLeadingZero(minutes);
+     secTimer.textContent = addLeadingZero(seconds);   
+    }, 1000);
+  }
+
+function addLeadingZero(value) {
+    return String(value).padStart(2, '0');
+  }
 
   function convertMs(ms) {
     // Number of milliseconds per unit of time
@@ -64,38 +113,19 @@ const datePicker = flatpickr(inputTimeField, options);
     
   }
 
-  console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
+ /*console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
   console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
   console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20} 
 
+  */
   
+ 
+
   
-  function handlerTimeClick(){
 
-  let timer = setInterval(() => {
-      const currentDateTime = new Date().getTime();
-      const selectedDateTime = datePicker.selectedDates[0].getTime();
-      let deltaTime = selectedDateTime - currentDateTime;
-     
-  
-     const { days, hours, minutes, seconds} = convertMs(deltaTime);
-     daysTimer.textContent = addLeadingZero(days);
-     hoursTimer.textContent = addLeadingZero(hours);
-     minsTimer.textContent = addLeadingZero(minutes);
-     secTimer.textContent = addLeadingZero(seconds);
-      
-     
-    if (deltaTime <= 1000) {
-      clearInterval(timer);
-    }
-    }, 1000);
-  }
 
-  function addLeadingZero(value) {
-    return String(value).padStart(2, '0');
-  }
 
-  startBtn.addEventListener("click", handlerTimeClick);
+
   
 
 
