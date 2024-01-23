@@ -45,7 +45,8 @@ const options =  {
           message: "You are the best",
         });
         startBtn.addEventListener("click", handlerTimeClick);
-        startBtn.disabled = true;
+        startBtn.disabled = false;
+        inputTimeField.disabled =false;
       } 
         
       }
@@ -57,8 +58,10 @@ console.log(datePicker);
 
 
  function handlerTimeClick(event){
+    
+    let timer = setInterval(() => {
 
- let timer = setInterval(() => {
+  
     const userSelectedDate = datePicker.selectedDates[0].getTime();
     console.log(userSelectedDate);
     const currentDateTime = new Date().getTime();
