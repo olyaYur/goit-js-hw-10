@@ -45,7 +45,7 @@ const options =  {
           message: "You are the best",
         });
         startBtn.addEventListener("click", handlerTimeClick);
-        startBtn.disabled = false;
+        startBtn.disabled = true;
       } 
         
       }
