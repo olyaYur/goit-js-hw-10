@@ -16,6 +16,8 @@ let secTimer = document.querySelector('span[data-seconds]');
 
 
 startBtn.disabled = true;
+inputTimeField.disabled =false;
+startBtn.addEventListener("click", handlerTimeClick);
 
 
 const options =  {
@@ -24,58 +26,49 @@ const options =  {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates,) {
-      startBtn.disabled = false;
-      startBtn.addEventListener("click", handlerTimeClick);
-
-      const currentDateTime = new Date().getTime();
+      let userSelectedDate = selectedDates[0].getTime();
+      console.log(userSelectedDate);
+      let currentDateTime = new Date().getTime();
       console.log(currentDateTime);
-      const selectedDateTime = selectedDates[0].getTime();
-      console.log(selectedDateTime);
-      
-      const difference = selectedDateTime - currentDateTime;
-      console.log(difference);
+      let deltaTime = userSelectedDate - currentDateTime;
+      console.log(deltaTime);
 
 
-      if(selectedDates[0].getTime()<= new Date().getTime()){
+      if(userSelectedDate <= currentDateTime){
         iziToast.error({
           message: "Please choose a date in the future",
         });
         startBtn.disabled = true;
-      } else if(event.target.nodeName !== 'button') {
-        return;
+        return
       } else {
-        handlerTimeClick();
+        iziToast.success({
+          message: "You are the best",
+        });
+        startBtn.addEventListener("click", handlerTimeClick);
+        startBtn.disabled = false;
+      } 
+        
       }
-    },
-  };
-  
+    }
   
 const datePicker = flatpickr(inputTimeField, options);
 console.log(datePicker);
 
 
+
  function handlerTimeClick(event){
-  iziToast.success({
-    position: 'topCenter',
-    title: 'Ok',
-    message: ' A good choice!',
-  });
 
-  startBtn.disabled = true;
-  inputTimeField.disabled = true;
+ let timer = setInterval(() => {
+    const userSelectedDate = datePicker.selectedDates[0].getTime();
+    console.log(userSelectedDate);
+    const currentDateTime = new Date().getTime();
+    /*console.log(currentDateTime);*/
+    const deltaTime = userSelectedDate - currentDateTime;
+     /* console.log(deltaTime)*/
 
-  let timer = null;
-
-  
-
-  timer = setInterval(() => {
-      let currentDateTime = new Date().getTime();
-      let selectedDateTime = datePicker.selectedDates[0].getTime();
-      let deltaTime = selectedDateTime - currentDateTime;
-
-      if (deltaTime <= 1000) {
+      if (deltaTime < 0) {
       clearInterval(timer);
-      timer = null;
+      
       startBtn.disabled = false;
       inputTimeField.disabled = false;
       return;
@@ -113,11 +106,7 @@ function addLeadingZero(value) {
     
   }
 
- /*console.log(convertMs(2000)); // {days: 0, hours: 0, minutes: 0, seconds: 2}
-  console.log(convertMs(140000)); // {days: 0, hours: 0, minutes: 2, seconds: 20}
-  console.log(convertMs(24140000)); // {days: 0, hours: 6 minutes: 42, seconds: 20} 
-
-  */
+ 
   
  
 
